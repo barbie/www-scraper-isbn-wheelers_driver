@@ -110,12 +110,13 @@ sub search {
     ($data->{pubdate})                  = $html =~ m!<th>International Publication Date</th>\s*<td>([^<]+)</td>!i;
     ($data->{isbn13})                   = $html =~ m!<th>ISBN-13</th>\s*<td>(\d+)</td>!i;
     ($data->{isbn10})                   = $html =~ m!<th>ISBN-10</th>\s*<td>(\d+)</td>!i;
-    ($data->{binding})                  = $html =~ m!<th>Format</th>\s*<td>([^<]+)</td>!s;
+    ($data->{binding})                  = $html =~ m!<th>Format</th>\s*<td>([^<]+)<!s;
     ($data->{pages})                    = $html =~ m!<th>Number of Pages</th>\s*<td>([^<]+)</td>!s;
     ($data->{width},$data->{height})    = $html =~ m!<tr>\s*<th>Dimensions</th>\s*<td>Width:\s*([\d.]+)mm<br />Height:\s*([\d.]+)mm<br />(?:Spine:\s*([\d.]+)mm)?</td>\s*</tr>!s;
     ($data->{weight})                   = $html =~ m!<tr>\s*<th>Weight</th>\s*<td>(\d+)g</td>\s*</tr>!s;
     ($data->{description})              = $html =~ m!<h2>Description of this book</h2>\s*<p>([^<]+)</p>!i;
 
+    $data->{binding} =~ s/,.*//;
     for(qw(image thumb)) {
         next unless(defined $data->{$_});
         next if($data->{$_} =~ m!^http://!);

@@ -2,6 +2,7 @@ Revision history for WWW-Scraper-ISBN-Wheelers_Driver
 =====================================================
 
         - added git repository links to metadata.
+        - site updated, binding pattern changed.
 
 0.10    2013-03-27
         - added isbn-check.pl to examples.
