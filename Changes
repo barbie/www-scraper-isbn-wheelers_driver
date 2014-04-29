@@ -2,6 +2,7 @@ Revision history for WWW-Scraper-ISBN-Wheelers_Driver
 =====================================================
 
         - test data update.
+        - fixed distribution name in META.
 
 0.11    2014-03-09
         - added git repository links to metadata.
