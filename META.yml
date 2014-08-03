@@ -11,9 +11,9 @@ installdirs:            site
 
 requires:
   perl:                         5.006
+  WWW::Mechanize:               1.60
   WWW::Scraper::ISBN:           0.25
   WWW::Scraper::ISBN::Driver:   0.18
-  WWW::Mechanize:               1.60
 recommends:
   Test::CPAN::Meta:             0
   Test::CPAN::Meta::JSON:       0
@@ -28,6 +28,7 @@ provides:
   WWW::Scraper::ISBN::Wheelers_Driver:
     file:     lib/WWW/Scraper/ISBN/Wheelers_Driver.pm
     version:  0.12
+
 no_index:
   directory:
     - t
@@ -41,4 +42,4 @@ resources:
 meta-spec:
    version:   1.4
    url:       http://module-build.sourceforge.net/META-spec-v1.4.html
-generated_by: Hand 1.0
+generated_by: Barbie 1.0
