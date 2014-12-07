@@ -1,6 +1,8 @@
 Revision history for WWW-Scraper-ISBN-Wheelers_Driver
 =====================================================
 
+        - fixed license fields in META.json to be lists.
+
 0.13    2014-08-10
         - minor package file updates.
         - extended test suite.
