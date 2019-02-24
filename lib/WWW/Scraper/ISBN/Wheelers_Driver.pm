@@ -37,7 +37,7 @@ use WWW::Mechanize;
 ###########################################################################
 # Constants
 
-use constant    SEARCH  => 'http://www.wheelers.co.nz/search/results/?query=';
+use constant    SEARCH  => 'https://www.wheelers.co.nz/search/results/?query=';
 
 #--------------------------------------------------------------------------
 
@@ -113,14 +113,22 @@ sub search {
     ($data->{binding})                  = $html =~ m!<th>Format</th>\s*<td>([^<]+)<!s;
     ($data->{pages})                    = $html =~ m!<th>Number of Pages</th>\s*<td>([^<]+)</td>!s;
     ($data->{width},$data->{height})    = $html =~ m!<tr>\s*<th>Dimensions</th>\s*<td>Width:\s*([\d.]+)mm<br />Height:\s*([\d.]+)mm<br />(?:Spine:\s*([\d.]+)mm)?</td>\s*</tr>!s;
-    ($data->{weight})                   = $html =~ m!<tr>\s*<th>Weight</th>\s*<td>(\d+)g</td>\s*</tr>!s;
+    ($data->{weight})                   = $html =~ m!<tr>\s*<th>Weight</th>\s*<td>([\d,]+)g</td>\s*</tr>!s;
     ($data->{description})              = $html =~ m!<h2>Description of this book</h2>\s*<p>([^<]+)</p>!i;
 
     $data->{binding} =~ s/,.*//;
+    $data->{weight}  =~ s/,//g;
     for(qw(image thumb)) {
         next unless(defined $data->{$_});
-        next if($data->{$_} =~ m!^http://!);
-        $data->{$_} =~ s!^//!http://!;
+        next if($data->{$_} =~ m!^https?://!);
+        $data->{$_} =~ s!^//!https://!;
+    }
+
+    # top 'n' tail trim
+    for(keys %$data) {
+        $data->{$_} =~ s/&#39;/'/g;
+        $data->{$_} =~ s/^\+//;
+        $data->{$_} =~ s/\+$//;
     }
 
     my $base = $mech->uri();
