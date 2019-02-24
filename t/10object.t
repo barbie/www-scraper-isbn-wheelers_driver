@@ -12,42 +12,42 @@ my $CHECK_DOMAIN    = 'www.google.com';
 
 my %tests = (
     '0847834816' => [
-        [ 'is',     'isbn',         '9780847834815' ],
-        [ 'is',     'isbn10',       '0847834816'    ],
-        [ 'is',     'isbn13',       '9780847834815' ],
-        [ 'is',     'ean13',        '9780847834815' ],
-        [ 'is',     'title',        'Joy Division'   ],
-        [ 'is',     'author',       'Kevin Cummins'  ],
-        [ 'like',   'publisher',    qr|Rizzoli International|   ],
-        [ 'is',     'pubdate',      '26 October 2010'   ],
-        [ 'like',   'binding',      qr/Hardback/    ],
-        [ 'is',     'pages',        208             ],
-        [ 'is',     'width',        241             ],
-        [ 'is',     'height',       302             ],
-        [ 'is',     'weight',       1397            ],
+        [ 'is',     'isbn',         '9780847834815'                     ],
+        [ 'is',     'isbn10',       '0847834816'                        ],
+        [ 'is',     'isbn13',       '9780847834815'                     ],
+        [ 'is',     'ean13',        '9780847834815'                     ],
+        [ 'is',     'title',        'Joy Division'                      ],
+        [ 'is',     'author',       'Kevin Cummins'                     ],
+        [ 'like',   'publisher',    qr|Rizzoli International|           ],
+        [ 'is',     'pubdate',      '26 October 2010'                   ],
+        [ 'like',   'binding',      qr/Hardback/                        ],
+        [ 'is',     'pages',        208                                 ],
+        [ 'is',     'width',        241                                 ],
+        [ 'is',     'height',       302                                 ],
+        [ 'is',     'weight',       1397                                ],
         [ 'is',     'image_link',   'https://r.wheelers.co/bk/large/978084/9780847834815.jpg' ],
         [ 'is',     'thumb_link',   'https://r.wheelers.co/bk/small/978084/9780847834815.jpg' ],
-        [ 'like',   'description',  qr|Joy Division pioneered a genre of music| ],
-        [ 'like',   'book_link',    qr|https://www.wheelers.co.nz/books/9780847834815-| ]
+        [ 'like',   'description',  qr|Joy Division pioneered a genre of music|               ],
+        [ 'like',   'book_link',    qr|https://www.wheelers.co.nz/books/9780847834815-|       ]
     ],
     '9780826415493' => [
-        [ 'is',     'isbn',         '9780826415493'             ],
-        [ 'is',     'isbn10',       '0826415490'                ],
-        [ 'is',     'isbn13',       '9780826415493'             ],
-        [ 'is',     'ean13',        '9780826415493'             ],
-        [ 'like',   'author',       qr/Chris Ott/               ],
-        [ 'is',     'title',        q|Joy Division's Unknown Pleasures|  ],
-        [ 'is',     'publisher',    'Bloomsbury Publishing PLC'             ],
-        [ 'is',     'pubdate',      '31 March 2004'              ],
-        [ 'is',     'binding',      'Paperback'                 ],
-        [ 'is',     'pages',        128                         ],
-        [ 'is',     'width',        128                         ],
-        [ 'is',     'height',       178                         ],
-        [ 'is',     'weight',       136                         ],
-        [ 'is',     'image_link',   'https://r.wheelers.co/bk/large/978082/9780826415493.jpg'    ],
-        [ 'is',     'thumb_link',   'https://r.wheelers.co/bk/small/978082/9780826415493.jpg'    ],
-        [ 'like',   'description',  qr|33 1/3 is a new series of short books|   ],
-        [ 'like',   'book_link',    qr|https://www.wheelers.co.nz/books/9780826415493-| ]
+        [ 'is',     'isbn',         '9780826415493'                     ],
+        [ 'is',     'isbn10',       '0826415490'                        ],
+        [ 'is',     'isbn13',       '9780826415493'                     ],
+        [ 'is',     'ean13',        '9780826415493'                     ],
+        [ 'like',   'author',       qr/Chris Ott/                       ],
+        [ 'is',     'title',        q|Joy Division's Unknown Pleasures| ],
+        [ 'is',     'publisher',    'Bloomsbury Publishing PLC'         ],
+        [ 'is',     'pubdate',      '31 March 2004'                     ],
+        [ 'is',     'binding',      'Paperback'                         ],
+        [ 'is',     'pages',        128                                 ],
+        [ 'is',     'width',        128                                 ],
+        [ 'is',     'height',       178                                 ],
+        [ 'is',     'weight',       136                                 ],
+        [ 'is',     'image_link',   'https://r.wheelers.co/bk/large/978082/9780826415493.jpg' ],
+        [ 'is',     'thumb_link',   'https://r.wheelers.co/bk/small/978082/9780826415493.jpg' ],
+        [ 'like',   'description',  qr|33 1/3 is a new series of short books|                 ],
+        [ 'like',   'book_link',    qr|https://www.wheelers.co.nz/books/9780826415493-|       ]
     ],
 );
 
@@ -61,12 +61,12 @@ my $scraper = WWW::Scraper::ISBN->new();
 isa_ok($scraper,'WWW::Scraper::ISBN');
 
 SKIP: {
-	skip "Can't see a network connection", $tests+1   if(pingtest($CHECK_DOMAIN));
+    skip "Can't see a network connection", $tests+1   if(pingtest($CHECK_DOMAIN));
 
-	$scraper->drivers($DRIVER);
+    $scraper->drivers($DRIVER);
 
     # this ISBN doesn't exist
-	my $isbn = "1234567890";
+    my $isbn = "1234567890";
     my $record;
     eval { $record = $scraper->search($isbn); };
     if($@) {
@@ -75,7 +75,7 @@ SKIP: {
     elsif($record->found) {
         ok(0,'Unexpectedly found a non-existent book');
     } else {
-		like($record->error,qr/Failed to find that book on Wheelers website|website appears to be unavailable/);
+        like($record->error,qr/Failed to find that book on Wheelers website|website appears to be unavailable/);
     }
 
     for my $isbn (keys %tests) {
