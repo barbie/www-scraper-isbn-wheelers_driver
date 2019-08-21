@@ -116,8 +116,8 @@ sub search {
     ($data->{weight})                = $html =~ m!<tr>\s*<th>Weight</th>\s*<td>([\d,]+)g</td>\s*</tr>!s;
     ($data->{description})           = $html =~ m!<h2>Description of this book</h2>\s*<p>([^<]+)</p>!i;
 
-    $data->{binding} =~ s/,.*//;
-    $data->{weight}  =~ s/,//g;
+    defined $data->{binding} && ($data->{binding} =~ s/,.*//);
+    defined $data->{weight}  && ($data->{weight}  =~ s/,//g);
     for(qw(image thumb)) {
         next unless(defined $data->{$_});
         next if($data->{$_} =~ m!^https?://!);
@@ -126,6 +126,7 @@ sub search {
 
     # top 'n' tail trim
     for(keys %$data) {
+        next unless(defined $data->{$_});
         $data->{$_} =~ s/&#39;/'/g;
         $data->{$_} =~ s/^\+//;
         $data->{$_} =~ s/\+$//;
